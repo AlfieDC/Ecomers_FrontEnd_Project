@@ -119,6 +119,10 @@ export default function Home() {
     setCartItems((prev) => prev.filter((item) => item.id !== productId))
   }
 
+  const handleUpdateQuantity = (productId: number, quantity: number) => {
+    setCartItems((prev) => prev.map((item) => (item.id === productId ? { ...item, quantity } : item)))
+  }
+
   return (
     <main className="min-h-screen bg-background flex flex-col">
       <Header cartCount={cartItems.length} onCartClick={() => setShowCart(!showCart)} />
@@ -158,6 +162,7 @@ export default function Home() {
           isOpen={showCart}
           items={cartItems}
           onRemoveItem={handleRemoveFromCart}
+          onUpdateQuantity={handleUpdateQuantity}
           onClose={() => setShowCart(false)}
         />
       </div>
