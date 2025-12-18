@@ -1,6 +1,6 @@
 "use client"
 
-import { X, Trash2 } from "lucide-react"
+import { X, Trash2, Plus, Minus } from "lucide-react"
 
 interface CartItem {
   id: number
@@ -14,11 +14,22 @@ interface CartPanelProps {
   isOpen: boolean
   items: CartItem[]
   onRemoveItem: (id: number) => void
+  onUpdateQuantity: (id: number, quantity: number) => void
   onClose: () => void
 }
 
-export default function CartPanel({ isOpen, items, onRemoveItem, onClose }: CartPanelProps) {
+export default function CartPanel({ isOpen, items, onRemoveItem, onUpdateQuantity, onClose }: CartPanelProps) {
   const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+
+  const handleIncrease = (id: number, currentQuantity: number) => {
+    onUpdateQuantity(id, currentQuantity + 1)
+  }
+
+  const handleDecrease = (id: number, currentQuantity: number) => {
+    if (currentQuantity > 1) {
+      onUpdateQuantity(id, currentQuantity - 1)
+    }
+  }
 
   return (
     <>
@@ -56,7 +67,22 @@ export default function CartPanel({ isOpen, items, onRemoveItem, onClose }: Cart
                   />
                   <div className="flex-1">
                     <h3 className="font-semibold text-foreground">{item.name}</h3>
-                    <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <button
+                        onClick={() => handleDecrease(item.id, item.quantity)}
+                        className="p-1 hover:bg-secondary rounded transition-colors disabled:opacity-50"
+                        disabled={item.quantity <= 1}
+                      >
+                        <Minus className="w-4 h-4" />
+                      </button>
+                      <span className="text-sm font-medium w-8 text-center">{item.quantity}</span>
+                      <button
+                        onClick={() => handleIncrease(item.id, item.quantity)}
+                        className="p-1 hover:bg-secondary rounded transition-colors"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </button>
+                    </div>
                     <p className="text-primary font-bold mt-1">${(item.price * item.quantity).toFixed(2)}</p>
                   </div>
                   <button
