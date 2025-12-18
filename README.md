@@ -1,10 +1,5 @@
 # Mini E-Commerce Catalog System
 
-**Course:** Frontend Development  
-**Institution:** Sorsogon State University, College of Information and Communication Technology  
-**Campus:** Bulan Campus  
-**Project Title:** Modern Frontend Web Application Using Vite, React, and TailwindCSS
-
 ---
 
 ## I. PROJECT TITLE
